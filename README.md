@@ -15,12 +15,6 @@ This is Learning Platform for HCI on Usability Testing
 </div>
 
 ---
-
-# 🧪 HCI Lab — Usability Testing Platform
-
-A browser-based usability evaluation platform for the
-Human Computer Interaction course at APIU.
-
 ## Live Demo
 🔗 https://hci-lab.vercel.app
 
