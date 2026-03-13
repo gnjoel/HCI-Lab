@@ -73,13 +73,17 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
 }
 .mission-stat .label{font-size:0.75rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
 
-/* GROUP GRID */
+/* GROUP GRID - Made fully responsive with auto-fit */
 .groups-section{max-width:1200px;margin:0 auto;padding:0 24px 80px;}
 .groups-title{
   text-align:center;font-family:'Orbitron',monospace;font-size:1rem;
   letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:40px;
 }
-.group-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;}
+.group-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+  gap:16px;
+}
 
 .group-card{
   background:var(--surface);border:1px solid var(--border);
@@ -116,6 +120,34 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
 }
 .group-status.active{background:rgba(6,182,212,0.1);color:#06B6D4;}
 .group-status.done{background:rgba(16,185,129,0.1);color:#10B981;}
+
+/* ══════════════════════════════════════
+   LOGIN MODAL
+══════════════════════════════════════ */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(8, 12, 20, 0.85); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; z-index: 2000;
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.modal-overlay.active { display: flex; opacity: 1; }
+.modal-content {
+  background: var(--surface); border: 1px solid var(--accent, #06B6D4);
+  padding: 32px; border-radius: 16px; width: 90%; max-width: 420px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-content h3 { font-family: 'Orbitron', monospace; font-size: 1.5rem; color: var(--accent, #06B6D4); margin-bottom: 8px; }
+.modal-desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; line-height: 1.5; }
+.modal-input {
+  width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  color: var(--text); padding: 12px 16px; border-radius: 8px; font-size: 0.95rem;
+  outline: none; font-family: 'Syne', sans-serif; transition: border-color 0.2s;
+  margin-bottom: 16px;
+}
+.modal-input:focus { border-color: var(--accent, #06B6D4); }
+.modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
 
 /* ══════════════════════════════════════
    GROUP WORKSPACE PAGE
@@ -185,7 +217,7 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
 .panel-desc{color:var(--muted);line-height:1.7;font-size:0.95rem;max-width:680px;}
 
 /* ─── INTRO PANEL ─── */
-.intro-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:32px;}
+.intro-cards{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;margin-bottom:32px;}
 .intro-card{
   background:var(--surface);border:1px solid var(--border);
   border-radius:14px;padding:24px;transition:border-color 0.3s;
@@ -196,7 +228,7 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
 .intro-card p{font-size:0.85rem;color:var(--muted);line-height:1.6;}
 .target-system-box{
   background:var(--surface);border:1px solid var(--accent);
-  border-radius:14px;padding:24px;display:flex;align-items:center;gap:20px;
+  border-radius:14px;padding:24px;display:flex;align-items:center;flex-wrap:wrap;gap:20px;
 }
 .target-link{
   display:inline-flex;align-items:center;gap:8px;
@@ -317,11 +349,12 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
 
 /* Issue Logger */
 .issue-logger{margin-top:4px;}
-.issue-add-row{display:flex;gap:10px;margin-bottom:10px;}
+.issue-add-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
 .issue-input{
   flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--border);
   color:var(--text);padding:9px 14px;border-radius:8px;font-size:0.85rem;
   outline:none;font-family:'Syne',sans-serif;transition:border-color 0.2s;
+  min-width: 200px;
 }
 .issue-input:focus{border-color:var(--accent);}
 .issue-input::placeholder{color:var(--muted);}
@@ -451,14 +484,13 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-he
   .nav-section-label{display:none;}
   .nav-item{padding:8px 12px;font-size:0.8rem;}
   .workspace-main{padding:24px 16px;}
-  .group-grid{grid-template-columns:repeat(2,1fr);}
-  .intro-cards{grid-template-columns:1fr;}
 }
 @media(max-width:560px){
-  .group-grid{grid-template-columns:1fr 1fr;}
   .landing-title{font-size:2rem;}
   .mission-bar{gap:24px;}
   .heuristic-header{flex-direction:column;}
+  .target-system-box{flex-direction:column;align-items:flex-start;}
+  .timer-section{flex-direction:column;align-items:flex-start;}
 }
 
 /* ─── LIGHT MODE ─── */
@@ -476,8 +508,8 @@ body.light .landing-hero::before { background: radial-gradient(ellipse 80% 60% a
 body.light .sidebar { background: #FFFFFF; }
 body.light .workspace-main { background: #F0F4FA; }
 body.light .heuristic-item:hover { border-color: rgba(0,0,0,0.2); }
-body.light .heuristic-notes, body.light .obs-textarea, body.light .issue-input {
-  background: rgba(0,0,0,0.03); color: var(--text);
+body.light .heuristic-notes, body.light .obs-textarea, body.light .issue-input, body.light .modal-input {
+  background: rgba(0,0,0,0.03); color: var(--text); border-color: rgba(0,0,0,0.1);
 }
 body.light .back-btn { color: #6B7280; }
 body.light .nav-item:hover { background: rgba(0,0,0,0.05); }
@@ -485,6 +517,7 @@ body.light .group-card { background: #FFFFFF; box-shadow: 0 2px 12px rgba(0,0,0,
 body.light .order-summary { background: #FFFFFF; }
 body.light .report-section { background: #FFFFFF; }
 body.light .celebration-content { background: #FFFFFF; }
+body.light .modal-content { background: #FFFFFF; }
 body.light .save-indicator { background: #FFFFFF; }
 body.light .task-card { background: #FFFFFF; }
 body.light .intro-card { background: #FFFFFF; }
@@ -496,40 +529,21 @@ body.light .report-header-box { background: #FFFFFF; }
 
 /* ─── THEME TOGGLE BUTTON ─── */
 .theme-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 500;
-  width: 52px;
-  height: 28px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background 0.3s, border-color 0.3s;
-  display: flex;
-  align-items: center;
-  padding: 3px;
+  position: fixed; top: 20px; right: 20px; z-index: 500;
+  width: 52px; height: 28px; background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: 20px;
+  cursor: pointer; transition: background 0.3s, border-color 0.3s;
+  display: flex; align-items: center; padding: 3px;
 }
 .theme-toggle-knob {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  width: 20px; height: 20px; border-radius: 50%;
   background: var(--accent, #06B6D4);
   transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
-body.light .theme-toggle-knob {
-  transform: translateX(24px);
-}
-.theme-toggle:hover .theme-toggle-knob {
-  box-shadow: 0 0 8px var(--accent, #06B6D4);
-}
-
+body.light .theme-toggle-knob { transform: translateX(24px); }
+.theme-toggle:hover .theme-toggle-knob { box-shadow: 0 0 8px var(--accent, #06B6D4); }
 
 /* ══════════════════════════════════════
    PRINT STYLES
@@ -539,7 +553,7 @@ body.light .theme-toggle-knob {
   body { background: #fff !important; color: #111 !important; font-family: 'Syne', sans-serif; }
   #stars, .theme-toggle, .save-indicator, .sidebar, .celebration,
   .back-btn, .complete-task-btn, .print-btn, .submit-btn,
-  .timer-btn, .add-issue-btn, .issue-tag-del, nav { display: none !important; }
+  .timer-btn, .add-issue-btn, .issue-tag-del, nav, .modal-overlay { display: none !important; }
   .workspace { display: block !important; }
   .workspace-main { padding: 0 !important; }
   .page { display: block !important; }
@@ -581,20 +595,20 @@ body.print-mode #page-workspace { display: none !important; }
 .pr-group-name { font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 900; }
 .pr-group-num { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
 .pr-badge { background: var(--accent, #06B6D4); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; display: inline-block; }
-.pr-meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+.pr-meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 .pr-meta-item .lbl { font-size: 0.65rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
 .pr-meta-item .val { font-size: 0.9rem; color: rgba(255,255,255,0.85); font-weight: 600; }
 
 /* MEMBERS */
 .pr-members-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
 .pr-members-box h3 { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #64748b; margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
-.pr-members-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-.pr-member-input { border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; font-family: 'Syne', sans-serif; color: #1A202C; background: #fff; width: 100%; outline: none; transition: border-color 0.2s; }
+.pr-members-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.pr-member-input { border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; font-family: 'Syne', sans-serif; color: #1A202C; background: #fff; width: 100%; outline: none; transition: border-color 0.2s; margin-bottom:8px; }
 .pr-member-input:focus { border-color: var(--accent, #06B6D4); }
-.pr-member-label { font-size: 0.7rem; color: #94a3b8; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+.pr-member-label { font-size: 0.7rem; color: #94a3b8; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
 
 /* TIMESTAMPS */
-.pr-timestamps { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.pr-timestamps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .pr-ts-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 20px; }
 .pr-ts-box h4 { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #64748b; font-family: 'JetBrains Mono', monospace; margin-bottom: 10px; }
 .pr-ts-row { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 5px 0; border-bottom: 1px solid #f1f5f9; }
@@ -603,7 +617,7 @@ body.print-mode #page-workspace { display: none !important; }
 .pr-ts-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #1A202C; font-size: 0.78rem; }
 
 /* STATS ROW */
-.pr-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+.pr-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 24px; }
 .pr-stat-box { border: 2px solid #e2e8f0; border-radius: 12px; padding: 16px; text-align: center; }
 .pr-stat-box .val { font-family: 'Orbitron', monospace; font-size: 1.8rem; font-weight: 700; }
 .pr-stat-box .lbl { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: #64748b; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
@@ -672,9 +686,24 @@ body.print-mode #page-workspace { display: none !important; }
 </button>
 <div class="save-indicator" id="saveIndicator">✓ AUTO-SAVED</div>
 
-<!-- ══════════════════════════════════════
-     LANDING PAGE
-══════════════════════════════════════ -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-content">
+    <h3 id="modalGroupName">Join Group</h3>
+    <p class="modal-desc">Please enter your personal details to log into this workspace.</p>
+    
+    <label class="field-label">Your Name</label>
+    <input type="text" id="loginName" class="modal-input" placeholder="e.g. John Doe">
+    
+    <label class="field-label">Student ID</label>
+    <input type="text" id="loginId" class="modal-input" placeholder="e.g. 6400000">
+    
+    <div class="modal-actions">
+      <button class="timer-btn reset" onclick="closeLoginModal()">Cancel</button>
+      <button class="add-issue-btn" onclick="submitLogin()">Enter Workspace →</button>
+    </div>
+  </div>
+</div>
+
 <div class="page active" id="page-landing">
   <div class="landing-hero">
     <div class="course-badge"><span></span> Human Computer Interaction — APIU</div>
@@ -693,18 +722,18 @@ body.print-mode #page-workspace { display: none !important; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     WORKSPACE PAGE
-══════════════════════════════════════ -->
 <div class="page" id="page-workspace">
   <div class="workspace">
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="ws-sidebar">
       <div class="sidebar-header">
         <button class="back-btn" onclick="goHome()">← All Groups</button>
         <div class="sidebar-group-icon" id="ws-icon">🔬</div>
         <div class="sidebar-group-label" id="ws-group-label">Group 01</div>
         <div class="sidebar-group-name" id="ws-group-name">Team Alpha</div>
+        
+        <div style="font-size:0.7rem; color:var(--muted); margin-top:14px; font-family:'JetBrains Mono', monospace;">
+          👤 <span id="ws-current-user">Guest</span>
+        </div>
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section-label">Mission Briefing</div>
@@ -735,10 +764,8 @@ body.print-mode #page-workspace { display: none !important; }
       </div>
     </aside>
 
-    <!-- MAIN PANELS -->
     <main class="workspace-main">
 
-      <!-- INTRO PANEL -->
       <div class="panel active" id="panel-intro">
         <div class="panel-header">
           <div class="panel-tag">Mission Briefing</div>
@@ -782,7 +809,6 @@ body.print-mode #page-workspace { display: none !important; }
         </div>
       </div>
 
-      <!-- HEURISTIC PANEL -->
       <div class="panel" id="panel-heuristic">
         <div class="panel-header">
           <div class="panel-tag">Phase 1</div>
@@ -806,7 +832,6 @@ body.print-mode #page-workspace { display: none !important; }
         </div>
       </div>
 
-      <!-- THINK ALOUD PANEL -->
       <div class="panel" id="panel-thinkaloud">
         <div class="panel-header">
           <div class="panel-tag">Phase 2</div>
@@ -823,7 +848,6 @@ body.print-mode #page-workspace { display: none !important; }
         </div>
       </div>
 
-      <!-- REPORT PANEL -->
       <div class="panel" id="panel-report">
         <div class="panel-header">
           <div class="panel-tag">Group Output</div>
@@ -869,7 +893,6 @@ body.print-mode #page-workspace { display: none !important; }
   </div>
 </div>
 
-<!-- CELEBRATION OVERLAY -->
 <div class="celebration" id="celebration" style="display:none;">
   <div class="celebration-content" id="celebContent">
     <div class="celebration-emoji" id="celebEmoji">🎉</div>
@@ -954,7 +977,7 @@ function loadState(gid) {
     taIssues: {},
     taCompleted: {},
     taskDurations: {},
-    members: { m1:'', m2:'', m3:'' },
+    members: { m1Name:'', m1Id:'', m2Name:'', m2Id:'', m3Name:'', m3Id:'' },
     timestamps: {
       sessionStart: null,
       hStart: null,
@@ -1005,8 +1028,10 @@ function saveState() {
 })();
 
 // ══════════════════════════════════════
-// LANDING PAGE — BUILD GROUP CARDS
+// LANDING PAGE & LOGIN MODAL
 // ══════════════════════════════════════
+let pendingGroup = null;
+
 function buildLanding() {
   const grid = document.getElementById('groupGrid');
   grid.innerHTML = '';
@@ -1026,7 +1051,7 @@ function buildLanding() {
       <div class="group-progress-text">${pct}% complete</div>
       <span class="group-status ${statusClass}">${statusText}</span>
     `;
-    div.onclick = () => openGroup(g);
+    div.onclick = () => promptLogin(g);
     grid.appendChild(div);
   });
 }
@@ -1040,12 +1065,61 @@ function calcProgress(s) {
   return Math.round((done / total) * 100);
 }
 
+// Prompt Name & Student ID
+function promptLogin(group) {
+  pendingGroup = group;
+  document.documentElement.style.setProperty('--accent', group.accent);
+  document.getElementById('modalGroupName').textContent = `Join ${group.name}`;
+  document.getElementById('loginModal').classList.add('active');
+  document.getElementById('loginName').focus();
+}
+
+function closeLoginModal() {
+  document.getElementById('loginModal').classList.remove('active');
+  pendingGroup = null;
+}
+
+function submitLogin() {
+  const name = document.getElementById('loginName').value.trim();
+  const id = document.getElementById('loginId').value.trim();
+  if (!name || !id) {
+    alert("Please enter both your Name and Student ID to continue.");
+    return;
+  }
+  
+  // Store session login details
+  window.currentUser = { name, id };
+  closeLoginModal();
+  openGroup(pendingGroup);
+  
+  // Clear inputs for next time
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginId').value = '';
+}
+
 // ══════════════════════════════════════
 // OPEN GROUP WORKSPACE
 // ══════════════════════════════════════
 function openGroup(group) {
   currentGroup = group;
   state = loadState(group.id);
+
+  // Upgrade backwards-compatible older state formats
+  if (state.members && state.members.m1 !== undefined && state.members.m1Name === undefined) {
+      state.members = { m1Name: state.members.m1, m1Id: '', m2Name: state.members.m2, m2Id: '', m3Name: state.members.m3, m3Id: '' };
+  } else if (!state.members) {
+      state.members = { m1Name:'', m1Id:'', m2Name:'', m2Id:'', m3Name:'', m3Id:'' };
+  }
+
+  // Pre-fill Member 1 with Logged In User
+  if (window.currentUser) {
+    if (!state.members.m1Name) {
+        state.members.m1Name = window.currentUser.name;
+        state.members.m1Id = window.currentUser.id;
+        saveState();
+    }
+    document.getElementById('ws-current-user').textContent = `${window.currentUser.name} (${window.currentUser.id})`;
+  }
 
   // Apply theme
   const root = document.documentElement;
@@ -1416,9 +1490,10 @@ function fmtSecs(secs) {
   return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
 
-function saveMember(n, val) {
-  if (!state.members) state.members = { m1:'', m2:'', m3:'' };
-  state.members[`m${n}`] = val;
+// Modified to handle Name AND Id fields for Members
+function saveMember(num, type, val) {
+  if (!state.members) state.members = { m1Name:'', m1Id:'', m2Name:'', m2Id:'', m3Name:'', m3Id:'' };
+  state.members[`m${num}${type}`] = val;
   saveState();
 }
 
@@ -1452,11 +1527,14 @@ function buildFullReport() {
   document.getElementById('pr-report-id').textContent = `HCI-G${currentGroup.id}-${Date.now().toString(36).toUpperCase()}`;
   document.getElementById('pr-footer-ts').textContent = fmtTs(now);
 
-  // Members
-  const m = state.members || { m1:'', m2:'', m3:'' };
-  document.getElementById('member1').value = m.m1 || '';
-  document.getElementById('member2').value = m.m2 || '';
-  document.getElementById('member3').value = m.m3 || '';
+  // Members (Name & IDs)
+  const m = state.members || { m1Name:'', m1Id:'', m2Name:'', m2Id:'', m3Name:'', m3Id:'' };
+  document.getElementById('member1Name').value = m.m1Name || '';
+  document.getElementById('member1Id').value = m.m1Id || '';
+  document.getElementById('member2Name').value = m.m2Name || '';
+  document.getElementById('member2Id').value = m.m2Id || '';
+  document.getElementById('member3Name').value = m.m3Name || '';
+  document.getElementById('member3Id').value = m.m3Id || '';
 
   // Timestamps
   document.getElementById('ts-h-start').textContent = fmtTs(ts.hStart);
@@ -1567,7 +1645,7 @@ function printReport() {
 
 function submitReport() {
   const m = state.members || {};
-  if (!m.m1 && !m.m2 && !m.m3) {
+  if (!m.m1Name && !m.m2Name && !m.m3Name) {
     alert('Please enter at least one group member name before submitting.');
     return;
   }
@@ -1691,13 +1769,9 @@ function spawnConfetti() {
 buildLanding();
 </script>
 
-<!-- ══════════════════════════════════════
-     PRINT / REPORT PAGE
-══════════════════════════════════════ -->
 <div class="page" id="page-print-report">
   <div class="print-report-wrap" id="printReportWrap">
 
-    <!-- HEADER -->
     <div class="pr-header" id="pr-header">
       <div class="pr-header-top">
         <div>
@@ -1723,26 +1797,27 @@ buildLanding();
       </div>
     </div>
 
-    <!-- GROUP MEMBERS -->
     <div class="pr-members-box">
       <h3>Group Members</h3>
       <div class="pr-members-grid">
         <div>
           <div class="pr-member-label">Member 1 — Participant</div>
-          <input class="pr-member-input" id="member1" placeholder="Full name" oninput="saveMember(1,this.value)">
+          <input class="pr-member-input" id="member1Name" placeholder="Full Name" oninput="saveMember(1,'Name',this.value)">
+          <input class="pr-member-input" id="member1Id" placeholder="Student ID" oninput="saveMember(1,'Id',this.value)">
         </div>
         <div>
           <div class="pr-member-label">Member 2 — Facilitator</div>
-          <input class="pr-member-input" id="member2" placeholder="Full name" oninput="saveMember(2,this.value)">
+          <input class="pr-member-input" id="member2Name" placeholder="Full Name" oninput="saveMember(2,'Name',this.value)">
+          <input class="pr-member-input" id="member2Id" placeholder="Student ID" oninput="saveMember(2,'Id',this.value)">
         </div>
         <div>
           <div class="pr-member-label">Member 3 — Observer</div>
-          <input class="pr-member-input" id="member3" placeholder="Full name" oninput="saveMember(3,this.value)">
+          <input class="pr-member-input" id="member3Name" placeholder="Full Name" oninput="saveMember(3,'Name',this.value)">
+          <input class="pr-member-input" id="member3Id" placeholder="Student ID" oninput="saveMember(3,'Id',this.value)">
         </div>
       </div>
     </div>
 
-    <!-- TIMESTAMPS -->
     <div class="pr-timestamps">
       <div class="pr-ts-box">
         <h4>📋 Phase 1 — Heuristic Evaluation</h4>
@@ -1758,7 +1833,6 @@ buildLanding();
       </div>
     </div>
 
-    <!-- STATS -->
     <div class="pr-stats-row">
       <div class="pr-stat-box">
         <div class="val" id="pr-stat-rated" style="color:var(--accent,#06B6D4)">—</div>
@@ -1778,31 +1852,26 @@ buildLanding();
       </div>
     </div>
 
-    <!-- HEURISTIC FINDINGS -->
     <div class="pr-section">
       <h3>Phase 1 — Heuristic Evaluation Findings</h3>
       <div id="pr-heuristic-rows"></div>
     </div>
 
-    <!-- THINK-ALOUD -->
     <div class="pr-section">
       <h3>Phase 2 — Think-Aloud Task Observations</h3>
       <div id="pr-task-blocks"></div>
     </div>
 
-    <!-- ISSUES -->
     <div class="pr-section">
       <h3>All Usability Issues Discovered (Think-Aloud)</h3>
       <div id="pr-all-issues"></div>
     </div>
 
-    <!-- COMPARISON -->
     <div class="pr-section">
       <h3>Phase Comparison & Key Insights</h3>
       <div class="pr-comparison" id="pr-comparison"></div>
     </div>
 
-    <!-- SUBMIT -->
     <div class="pr-submit-section">
       <h3>SUBMIT YOUR REPORT</h3>
       <p>When all fields are complete, save your report to localStorage and print/export as PDF.</p>
