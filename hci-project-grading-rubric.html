@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HCI/UX Project Rubric — Lecturer Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Karla:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'Karla', sans-serif;
+  background: #0f1117;
+  color: #e8e6df;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+  --bg-base:    #0f1117;
+  --bg-surface: #181c26;
+  --bg-card:    #1e2235;
+  --bg-raised:  #252a40;
+  --border:     rgba(255,255,255,0.07);
+  --border-md:  rgba(255,255,255,0.12);
+  --text-primary:   #e8e6df;
+  --text-secondary: #9a98a0;
+  --text-muted:     #5e5c66;
+  --accent:     #4f8ef7;
+  --accent-dim: rgba(79,142,247,0.12);
+
+  --ex-bg:     rgba(76,175,80,0.1);
+  --ex-border: rgba(76,175,80,0.35);
+  --ex-text:   #81c784;
+  --ex-score:  #4caf50;
+
+  --go-bg:     rgba(79,142,247,0.1);
+  --go-border: rgba(79,142,247,0.35);
+  --go-text:   #82b4fb;
+  --go-score:  #4f8ef7;
+
+  --sa-bg:     rgba(255,183,77,0.1);
+  --sa-border: rgba(255,183,77,0.35);
+  --sa-text:   #ffcc80;
+  --sa-score:  #ffb74d;
+
+  --ni-bg:     rgba(229,57,53,0.1);
+  --ni-border: rgba(229,57,53,0.35);
+  --ni-text:   #ef9a9a;
+  --ni-score:  #e53935;
+
+  --warn-bg:   rgba(255,152,0,0.08);
+  --warn-border: rgba(255,152,0,0.3);
+}
+
+/* ── Layout ───────────────────────────────────────────────── */
+.page-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-md);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.header-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(79,142,247,0.3);
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  width: fit-content;
+}
+
+.header-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.page-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 600;
+  color: #f0eee8;
+  line-height: 1.25;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+.header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.25rem;
+}
+
+.meta-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+/* ── Legend ───────────────────────────────────────────────── */
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.legend-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid;
+  font-family: 'Karla', sans-serif;
+}
+.legend-pill.ex { background: var(--ex-bg); border-color: var(--ex-border); color: var(--ex-text); }
+.legend-pill.go { background: var(--go-bg); border-color: var(--go-border); color: var(--go-text); }
+.legend-pill.sa { background: var(--sa-bg); border-color: var(--sa-border); color: var(--sa-text); }
+.legend-pill.ni { background: var(--ni-bg); border-color: var(--ni-border); color: var(--ni-text); }
+.legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+.ex .legend-dot { background: var(--ex-score); }
+.go .legend-dot { background: var(--go-score); }
+.sa .legend-dot { background: var(--sa-score); }
+.ni .legend-dot { background: var(--ni-score); }
+
+/* ── Weight Summary Bar ───────────────────────────────────── */
+.weight-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 2.5rem;
+}
+
+.wt-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.wt-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4; }
+.wt-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--accent);
+}
+.wt-card.total {
+  border-color: rgba(79,142,247,0.4);
+  background: var(--accent-dim);
+}
+.wt-card.total .wt-pct { font-size: 26px; color: #82b4fb; }
+.wt-card.total .wt-label { color: var(--go-text); }
+
+/* ── Section Block ────────────────────────────────────────── */
+.section-block {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.2s;
+}
+.section-block:hover { border-color: var(--border-md); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.section-header:hover { background: var(--bg-raised); }
+
+.sec-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  min-width: 24px;
+  flex-shrink: 0;
+}
+.sec-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+.sec-weight {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(79,142,247,0.3);
+  color: var(--accent);
+  padding: 3px 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.sec-chevron {
+  font-size: 10px;
+  color: var(--text-muted);
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.sec-chevron.open { transform: rotate(90deg); }
+
+/* ── Section Body ─────────────────────────────────────────── */
+.section-body {
+  display: none;
+}
+.section-body.open { display: block; }
+
+/* ── Criterion ────────────────────────────────────────────── */
+.criterion {
+  border-top: 1px solid var(--border);
+}
+
+.crit-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 20px 10px;
+  background: var(--bg-surface);
+}
+.crit-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+.crit-pts {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* ── Levels Grid ──────────────────────────────────────────── */
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 720px) {
+  .levels-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 420px) {
+  .levels-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.level-cell {
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+}
+.level-cell:last-child { border-right: none; }
+
+@media (max-width: 720px) {
+  .level-cell:nth-child(2) { border-right: none; }
+  .level-cell:nth-child(3) { border-top: 1px solid var(--border); }
+  .level-cell:nth-child(4) { border-right: none; border-top: 1px solid var(--border); }
+}
+@media (max-width: 420px) {
+  .level-cell { border-right: none; border-top: 1px solid var(--border); }
+  .level-cell:first-child { border-top: none; }
+}
+
+.level-cell.ex { background: var(--ex-bg); }
+.level-cell.go { background: var(--go-bg); }
+.level-cell.sa { background: var(--sa-bg); }
+.level-cell.ni { background: var(--ni-bg); }
+
+.level-label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.level-cell.ex .level-label { color: var(--ex-text); }
+.level-cell.go .level-label { color: var(--go-text); }
+.level-cell.sa .level-label { color: var(--sa-text); }
+.level-cell.ni .level-label { color: var(--ni-text); }
+
+.level-ldot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ex .level-ldot { background: var(--ex-score); }
+.go .level-ldot { background: var(--go-score); }
+.sa .level-ldot { background: var(--sa-score); }
+.ni .level-ldot { background: var(--ni-score); }
+
+.level-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  margin-bottom: 7px;
+}
+.ex .level-score { color: var(--ex-text); }
+.go .level-score { color: var(--go-text); }
+.sa .level-score { color: var(--sa-text); }
+.ni .level-score { color: var(--ni-text); }
+
+.level-desc {
+  font-size: 12.5px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* ── Pitfall Box ──────────────────────────────────────────── */
+.pitfall-box {
+  margin: 0 20px 16px;
+  padding: 12px 16px;
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn-border);
+  border-radius: 0 4px 4px 0;
+}
+.pitfall-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #ffb74d;
+  margin-bottom: 5px;
+}
+.pitfall-text {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── Score Entry (Lecturer Only) ──────────────────────────── */
+.score-entry-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: var(--bg-raised);
+  border-top: 1px solid var(--border);
+}
+.score-entry-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  flex: 1;
+  min-width: 140px;
+}
+.score-select {
+  appearance: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 6px 30px 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239a98a0'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  min-width: 180px;
+}
+.score-select:focus { outline: 1px solid var(--accent); }
+
+.score-num-wrap { display: flex; align-items: center; gap: 8px; }
+.score-num-label { font-size: 12px; color: var(--text-secondary); }
+.score-num-input {
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  width: 72px;
+  text-align: center;
+}
+.score-num-input:focus { outline: 1px solid var(--accent); }
+
+/* ── Comment Box ──────────────────────────────────────────── */
+.comment-row {
+  padding: 10px 20px 14px;
+  background: var(--bg-raised);
+  border-top: 1px solid var(--border);
+}
+.comment-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.comment-area {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  color: var(--text-primary);
+  font-family: 'Karla', sans-serif;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.55;
+}
+.comment-area:focus { outline: 1px solid var(--accent); }
+.comment-area::placeholder { color: var(--text-muted); font-style: italic; }
+
+/* ── Totals Dashboard ─────────────────────────────────────── */
+.totals-section {
+  margin-top: 2.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-md);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.totals-header {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  font-size: 14px; font-weight: 600;
+  color: var(--text-primary);
+}
+.totals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+.total-cell {
+  background: var(--bg-surface);
+  padding: 16px 18px;
+}
+.total-cell-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.total-cell-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: var(--accent);
+}
+.total-cell.grand {
+  background: var(--accent-dim);
+}
+.total-cell.grand .total-cell-label { color: var(--go-text); }
+.total-cell.grand .total-cell-score { font-size: 28px; color: #a8c8fd; }
+
+/* ── Overall Comment ──────────────────────────────────────── */
+.overall-comment {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Print Button ─────────────────────────────────────────── */
+.action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-family: 'Karla', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn:hover { opacity: 0.85; }
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.btn-outline {
+  background: transparent;
+  border-color: var(--border-md);
+  color: var(--text-secondary);
+}
+
+/* ── Footer Note ──────────────────────────────────────────── */
+.footer-note {
+  margin-top: 2rem;
+  padding: 16px 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.footer-note strong { color: var(--text-primary); }
+
+/* ── Print Styles ─────────────────────────────────────────── */
+@media print {
+  body { background: #fff; color: #111; }
+  :root {
+    --bg-base: #fff; --bg-surface: #f5f5f5; --bg-card: #ebebeb;
+    --bg-raised: #e0e0e0; --border: #ddd; --border-md: #bbb;
+    --text-primary: #111; --text-secondary: #444; --text-muted: #888;
+    --accent: #1a56db; --accent-dim: #e8effc;
+    --ex-bg: #f0faf0; --ex-border: #4caf50; --ex-text: #2e7d32; --ex-score: #2e7d32;
+    --go-bg: #e8effc; --go-border: #1a56db; --go-text: #1a3a6b; --go-score: #1a3a6b;
+    --sa-bg: #fffbe6; --sa-border: #f59e0b; --sa-text: #7a4f00; --sa-score: #7a4f00;
+    --ni-bg: #fff0f0; --ni-border: #e53935; --ni-text: #7f1010; --ni-score: #7f1010;
+    --warn-bg: #fffce6; --warn-border: #f59e0b;
+  }
+  .action-bar { display: none; }
+  .section-body { display: block !important; }
+  .sec-chevron { display: none; }
+  .page-shell { padding: 1rem; max-width: 100%; }
+  .page-title { font-size: 22px; }
+  .section-block { break-inside: avoid; margin-bottom: 0.75rem; }
+  .comment-area { border: 1px solid #ccc; min-height: 50px; }
+  .score-select { border: 1px solid #ccc; background: none; }
+}
+
+@media (max-width: 560px) {
+  .page-shell { padding: 1.25rem 1rem 3rem; }
+  .section-header { padding: 13px 14px; gap: 10px; }
+  .crit-header { flex-direction: column; gap: 2px; }
+  .score-entry-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- ── Header ── -->
+  <header class="page-header">
+    <span class="header-tag">Lecturer Assessment</span>
+    <h1 class="page-title">HCI / UX Design Project<br>Grading Rubric</h1>
+    <p class="page-subtitle">Criterion-based assessment guide for Human Computer Interaction Group project. Designed for transparent, defensible grading that rewards research-driven process over surface polish.</p>
+    <div class="header-meta">
+      <span class="meta-chip">Semester-long project</span>
+      <span class="meta-chip">5 sections · 100% total</span>
+      <span class="meta-chip">4-level performance scale</span>
+      <span class="meta-chip">Version: Instructor Edition</span>
+    </div>
+  </header>
+
+  <!-- ── Legend ── -->
+  <div class="legend-bar">
+    <div class="legend-pill ex"><span class="legend-dot"></span>Excellent 90–100%</div>
+    <div class="legend-pill go"><span class="legend-dot"></span>Good 75–89%</div>
+    <div class="legend-pill sa"><span class="legend-dot"></span>Satisfactory 60–74%</div>
+    <div class="legend-pill ni"><span class="legend-dot"></span>Needs Improvement &lt;60%</div>
+  </div>
+
+  <!-- ── Weight Summary ── -->
+  <div class="weight-summary">
+    <div class="wt-card"><div class="wt-label">Proposal &amp; User Research</div><div class="wt-pct">20%</div></div>
+    <div class="wt-card"><div class="wt-label">Ideation &amp; Lo-Fi Prototyping</div><div class="wt-pct">20%</div></div>
+    <div class="wt-card"><div class="wt-label">Usability Testing &amp; Iteration</div><div class="wt-pct">20%</div></div>
+    <div class="wt-card"><div class="wt-label">Hi-Fi Prototype &amp; Accessibility</div><div class="wt-pct">25%</div></div>
+    <div class="wt-card"><div class="wt-label">Presentation, Report &amp; Portfolio</div><div class="wt-pct">15%</div></div>
+    <div class="wt-card total"><div class="wt-label">Total</div><div class="wt-pct">100%</div></div>
+  </div>
+
+  <!-- ════════════ SECTION 1 ════════════ -->
+  <div class="section-block" id="s1">
+    <div class="section-header" onclick="toggleSection('s1')">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Project Proposal and User Research</span>
+      <span class="sec-weight">20%</span>
+      <span class="sec-chevron open" id="s1-ch">&#9658;</span>
+    </div>
+    <div class="section-body open" id="s1-body">
+
+      <!-- 1a -->
+      <div class="criterion">
+        <div class="crit-header">
+          <span class="crit-name">1a. Innovation and Concept</span>
+          <span class="crit-pts">Sub-weight: 7 / 20 pts</span>
+        </div>
+        <div class="levels-grid">
+          <div class="level-cell ex">
+            <div class="level-label"><span class="level-ldot"></span>Excellent</div>
+            <div class="level-score">90–100%</div>
+            <div class="level-desc">Proposes a genuinely novel interaction technique or interface with a clearly articulated gap in existing solutions. The real-world problem is specific, scoped, and validated with preliminary evidence (literature, observed behavior). Innovation is distinct from superficial feature additions.</div>
+          </div>
+          <div class="level-cell go">
+            <div class="level-label"><span class="level-ldot"></span>Good</div>
+            <div class="level-score">75–89%</div>
+            <div class="level-desc">Concept addresses a real problem with a meaningful interaction novelty. The gap in existing solutions is identified but may rely partly on assertion rather than evidence. Innovation direction is clear and plausible, even if not fully differentiated.</div>
+          </div>
+          <div class="level-cell sa">
+            <div class="level-label"><span class="level-ldot"></span>Satisfactory</div>
+            <div class="level-score">60–74%</div>
+            <div class="level-desc">Concept is functional and well-intentioned but represents an incremental or derivative approach. Novelty claims are not strongly justified. Problem may be too broad or too vague to guide research meaningfully.</div>
+          </div>
+          <div class="level-cell ni">
+            <div class="level-label"><span class="level-ldot"></span>Needs Improvement</div>
+            <div class="level-score">&lt;60%</div>
+            <div class="level-desc">Concept replicates an existing product without meaningful differentiation. No novel interaction technique is proposed. Problem is abstract, assumed, or misaligned with HCI scope (e.g., purely a backend engineering problem).</div>
+          </div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">1a — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s1a', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option>
+            <option value="82">Good (82)</option>
+            <option value="67">Satisfactory (67)</option>
+            <option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap">
+            <span class="score-num-label">or enter score:</span>
+            <input type="number" class="score-num-input" id="s1a-input" min="0" max="100" placeholder="—" oninput="recalc()">
+          </div>
+        </div>
+        <div class="comment-row">
+          <div class="comment-label">Grader notes — 1a</div>
+          <textarea class="comment-area" placeholder="Record specific observations, evidence found or missing, student strengths, and areas for improvement…"></textarea>
+        </div>
+      </div>
+
+      <!-- 1b -->
+      <div class="criterion">
+        <div class="crit-header">
+          <span class="crit-name">1b. User Empathy and Understanding</span>
+          <span class="crit-pts">Sub-weight: 7 / 20 pts</span>
+        </div>
+        <div class="levels-grid">
+          <div class="level-cell ex">
+            <div class="level-label"><span class="level-ldot"></span>Excellent</div>
+            <div class="level-score">90–100%</div>
+            <div class="level-desc">Conducts 4+ interviews with representative users; transcripts or detailed notes provided. Empathy maps synthesize emotional, behavioral, and attitudinal dimensions. Personas derived from grouped, cross-participant patterns — not individual profiles or invented archetypes. Direct evidence traces back to persona attributes.</div>
+          </div>
+          <div class="level-cell go">
+            <div class="level-label"><span class="level-ldot"></span>Good</div>
+            <div class="level-score">75–89%</div>
+            <div class="level-desc">Conducts 3+ interviews with appropriate participants. Empathy maps are present and mostly complete but may conflate assumptions with observed data. Personas are plausible and pattern-based, though some attributes lack explicit research grounding.</div>
+          </div>
+          <div class="level-cell sa">
+            <div class="level-label"><span class="level-ldot"></span>Satisfactory</div>
+            <div class="level-score">60–74%</div>
+            <div class="level-desc">Fewer than 3 interviews, or participants are not representative (e.g., convenience sample of classmates for a specialized domain). Empathy maps present but shallow. Personas feel prescriptive or assumption-driven rather than evidence-derived.</div>
+          </div>
+          <div class="level-cell ni">
+            <div class="level-label"><span class="level-ldot"></span>Needs Improvement</div>
+            <div class="level-score">&lt;60%</div>
+            <div class="level-desc">No user interviews conducted. Personas are entirely fictional or drawn from personal experience alone. No empathy maps, or maps are populated with unsupported generalizations. Research artifacts appear fabricated or retroactively constructed.</div>
+          </div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">1b — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s1b', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option>
+            <option value="82">Good (82)</option>
+            <option value="67">Satisfactory (67)</option>
+            <option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap">
+            <span class="score-num-label">or enter score:</span>
+            <input type="number" class="score-num-input" id="s1b-input" min="0" max="100" placeholder="—" oninput="recalc()">
+          </div>
+        </div>
+        <div class="comment-row">
+          <div class="comment-label">Grader notes — 1b</div>
+          <textarea class="comment-area" placeholder="Note whether interview transcripts were provided, whether empathy maps distinguish observed vs assumed, whether persona attributes trace to research…"></textarea>
+        </div>
+      </div>
+
+      <!-- 1c -->
+      <div class="criterion">
+        <div class="crit-header">
+          <span class="crit-name">1c. Problem Definition</span>
+          <span class="crit-pts">Sub-weight: 6 / 20 pts</span>
+        </div>
+        <div class="levels-grid">
+          <div class="level-cell ex">
+            <div class="level-label"><span class="level-ldot"></span>Excellent</div>
+            <div class="level-score">90–100%</div>
+            <div class="level-desc">Journey maps trace a real user's experience end-to-end with explicit emotional arcs; pain points identified at specific touchpoints. Problem statement follows a testable format ("[User] needs [goal] because [insight]"). Hypothesis and goal statements are measurable and research-grounded. Zero unattributed assumptions.</div>
+          </div>
+          <div class="level-cell go">
+            <div class="level-label"><span class="level-ldot"></span>Good</div>
+            <div class="level-score">75–89%</div>
+            <div class="level-desc">Journey maps are present and mostly accurate. Problem statement is clear and user-centered but may contain one or two implicit assumptions. Goal and hypothesis statements are present and largely measurable, with minor gaps in research traceability.</div>
+          </div>
+          <div class="level-cell sa">
+            <div class="level-label"><span class="level-ldot"></span>Satisfactory</div>
+            <div class="level-score">60–74%</div>
+            <div class="level-desc">Journey maps exist but may be incomplete or generic. Problem statement is vague or solution-framing ("users need our app"). Hypothesis or goal statements are missing or untestable. Some pain points appear assumed rather than observed.</div>
+          </div>
+          <div class="level-cell ni">
+            <div class="level-label"><span class="level-ldot"></span>Needs Improvement</div>
+            <div class="level-score">&lt;60%</div>
+            <div class="level-desc">No journey maps, or maps describe an idealized rather than real user experience. Problem statement is absent, circular, or solution-first. Hypothesis is missing. Definitions rest entirely on designer assumptions with no user evidence cited.</div>
+          </div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">1c — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s1c', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option>
+            <option value="82">Good (82)</option>
+            <option value="67">Satisfactory (67)</option>
+            <option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap">
+            <span class="score-num-label">or enter score:</span>
+            <input type="number" class="score-num-input" id="s1c-input" min="0" max="100" placeholder="—" oninput="recalc()">
+          </div>
+        </div>
+        <div class="comment-row">
+          <div class="comment-label">Grader notes — 1c</div>
+          <textarea class="comment-area" placeholder="Check whether problem statement is testable, whether journey maps show emotional arcs, whether hypothesis is measurable…"></textarea>
+        </div>
+      </div>
+
+      <div class="pitfall-box">
+        <div class="pitfall-label">Common Pitfalls — Section 1</div>
+        <div class="pitfall-text">Weak research: fewer than 3 users, friends/family for a specialized population, or surveys substituted for contextual interviews. Performative empathy maps that list demographics rather than attitudes and behaviors. Personas labeled "tech-savvy millennial" with no research basis are penalized as assumptions. Problem statements that describe a solution ("we will build an app that…") rather than a user need are considered misdefined and should be flagged explicitly.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 2 ════════════ -->
+  <div class="section-block" id="s2">
+    <div class="section-header" onclick="toggleSection('s2')">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Ideation and Low-Fidelity Prototyping</span>
+      <span class="sec-weight">20%</span>
+      <span class="sec-chevron" id="s2-ch">&#9658;</span>
+    </div>
+    <div class="section-body" id="s2-body">
+
+      <div class="criterion">
+        <div class="crit-header">
+          <span class="crit-name">2a. Ideation Process</span>
+          <span class="crit-pts">Sub-weight: 7 / 20 pts</span>
+        </div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Competitive audit covers 4+ direct and indirect competitors with structured evaluation across consistent dimensions. Gaps are explicitly identified. HMW questions are reframed from specific user research pain points — not generic brainstorming prompts — and clearly link to subsequent design decisions.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Competitive audit covers 3+ competitors with reasonable consistency. HMW questions are present and mostly derived from research, though some may be broad or weakly connected to identified pain points. Design direction is traceable to ideation output.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Competitive audit exists but is superficial (screenshots only, no analytical framework). HMW questions are present but feel generic or unconnected to actual research findings. Link between ideation and design choices is unclear.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">No competitive audit, or audit covers only 1–2 products with no evaluative framework. HMW questions are absent or simply restate the problem. Ideation lacks any structured methodology; designs appear conceived before research was complete.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">2a — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s2a', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s2a-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 2a</div><textarea class="comment-area" placeholder="Note number of competitors audited, whether evaluation framework is consistent, whether HMW questions trace to documented pain points…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header">
+          <span class="crit-name">2b. Information Architecture</span>
+          <span class="crit-pts">Sub-weight: 6 / 20 pts</span>
+        </div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">User flows cover primary and edge-case paths with clear decision nodes. Storyboards depict realistic context of use and emotional states, not just screen transitions. Sitemap is hierarchically accurate, consistent with the prototype, and reflects the mental model derived from research.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">User flows cover primary paths; edge cases may be missing. Storyboards are present and contextually grounded. Sitemap is consistent with wireframes but may have minor structural gaps or labeling inconsistencies.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">User flows cover only the "happy path" with no branching. Storyboards are linear screen-dumps without context or emotion. Sitemap exists but does not match the prototype structure, suggesting it was produced in isolation.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">One or more of user flows, storyboards, or sitemap is missing. What is present is incomplete, inaccurate, or copied from an unrelated template. IA artifacts do not connect to the proposed design.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">2b — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s2b', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s2b-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 2b</div><textarea class="comment-area" placeholder="Check whether sitemap was produced before or after the prototype; verify storyboard shows context not just screens…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header">
+          <span class="crit-name">2c. Wireframing</span>
+          <span class="crit-pts">Sub-weight: 7 / 20 pts</span>
+        </div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Paper sketches show genuine exploratory iteration (multiple divergent concepts visible). Digital wireframes use standard lo-fi symbols consistently across all screens. Interactive navigation between at least 5 key screens is functional. No high-fidelity styling in lo-fi phase.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Paper sketches show 2+ variations per key screen. Digital wireframes follow lo-fi conventions with minor deviations. Navigation between major screens works. Some non-standard symbols appear but do not impede comprehension.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Paper sketches exist but show a single concept per screen. Digital wireframes include prematurely applied styling (fonts, colors) that conflates lo-fi and hi-fi phases. Navigation is minimal or non-functional.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">Paper sketches are absent or are post-hoc drawings of a digital prototype already built. Digital wireframes are missing or are screenshots of competitor products. No interactive navigation present.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">2c — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s2c', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s2c-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 2c</div><textarea class="comment-area" placeholder="Note whether lo-fi uses real typography or color (flag if so). Count paper sketch variations. Verify interactive navigation count…"></textarea></div>
+      </div>
+
+      <div class="pitfall-box">
+        <div class="pitfall-label">Common Pitfalls — Section 2</div>
+        <div class="pitfall-text">Fabricated HMW questions not derived from documented pain points. Wireframes that are screenshots of existing apps relabeled. Lo-fi prototypes with full color palettes and real typography are not lo-fi — flag as non-compliant. Sitemaps submitted after hi-fi prototypes that reflect the final design rather than the planned architecture are treated as reverse-engineered artifacts.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 3 ════════════ -->
+  <div class="section-block" id="s3">
+    <div class="section-header" onclick="toggleSection('s3')">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Usability Testing and Iteration</span>
+      <span class="sec-weight">20%</span>
+      <span class="sec-chevron" id="s3-ch">&#9658;</span>
+    </div>
+    <div class="section-body" id="s3-body">
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">3a. Testing Execution</span><span class="crit-pts">Sub-weight: 7 / 20 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Recruits 4–5 users matching the target persona; recruitment rationale documented. Test protocol includes task scenarios, think-aloud prompts, and observation notes. Both usability issues and innovation-specific feedback are captured. Raw observation notes or recordings are archived.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Tests with 3–4 appropriate users. Protocol is structured but may lack think-aloud prompting. Qualitative data is collected; both usability and some innovation-relevant feedback are documented. Minor gaps in participant representativeness are acknowledged.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Tests with 3 users, at least some of whom do not match the target persona. Protocol is informal. Feedback collected is mostly positive and lacks critical usability insight. Testing appears confirmatory rather than exploratory.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">Fewer than 3 users tested, or testing is undocumented. Participants are clearly non-representative. No structured protocol evident. Feedback is anecdotal ("they liked it") with no specific behavioral observations recorded.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">3a — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s3a', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s3a-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 3a</div><textarea class="comment-area" placeholder="Verify participant count and representativeness. Check whether raw notes or recordings were provided. Note if testing was clearly confirmatory…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">3b. Synthesizing Insights</span><span class="crit-pts">Sub-weight: 6 / 20 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Affinity diagram constructed from individual raw observations; clusters labeled with insight statements, not topic nouns. P0/P1/P2 uses an explicit rationale (frequency × severity). All P0 and P1 issues have direct traceability to observed test moments.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Affinity diagram present with reasonable clustering. Insight labels are mostly pattern-based but some clusters use generic topic labels. P0/P1/P2 is applied with a stated rationale, though prioritization logic may be partially implicit.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Affinity diagram uses broad category labels (e.g., "navigation," "visuals") without actionable insight statements. P0/P1/P2 assigned but without visible rationale — prioritization appears arbitrary.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">No affinity diagram, or a list formatted in columns rather than a diagram. P0/P1/P2 framework absent or misapplied (e.g., all issues labeled P0). Insights not traceable to specific test observations.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">3b — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s3b', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s3b-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 3b</div><textarea class="comment-area" placeholder="Check whether affinity diagram was built from raw stickies vs summaries. Verify P0/P1/P2 rationale is stated explicitly…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">3c. Design Iteration</span><span class="crit-pts">Sub-weight: 7 / 20 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">All P0 and P1 issues addressed with documented before/after comparisons. Each change annotated with rationale linking to a specific insight. P2 changes implemented where feasible and acknowledged where deferred with justification. Design evolution clearly visible.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">All P0 issues and most P1 issues addressed. Before/after documentation exists for major changes. Rationale provided for most changes but may be missing for 1–2 minor ones. P2 items are acknowledged.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Some P0 issues remain unaddressed without justification. Before/after documentation incomplete or shows cosmetic changes only. Design evolution is difficult to distinguish from the lo-fi version.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">No documented iteration. Hi-fi prototype does not reflect usability testing findings. Before/after documentation absent or shows no meaningful changes. Team appears to have proceeded from lo-fi to hi-fi without an iteration cycle.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">3c — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s3c', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s3c-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 3c</div><textarea class="comment-area" placeholder="Verify all P0 issues were addressed. Check before/after for substantive vs cosmetic changes. Note any unaddressed P1s without justification…"></textarea></div>
+      </div>
+
+      <div class="pitfall-box">
+        <div class="pitfall-label">Common Pitfalls — Section 3</div>
+        <div class="pitfall-text">Confirmatory testing: designing tests that only verify what works. A usability test producing zero P0 issues for a first-draft prototype is almost always a sign of leading questions or non-representative participants. Affinity diagrams that are lists in columns are not diagrams. "Before vs. after" showing only a color change with no structural improvement will be scored as non-iterative.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 4 ════════════ -->
+  <div class="section-block" id="s4">
+    <div class="section-header" onclick="toggleSection('s4')">
+      <span class="sec-num">04</span>
+      <span class="sec-title">High-Fidelity Prototyping and Accessibility</span>
+      <span class="sec-weight">25%</span>
+      <span class="sec-chevron" id="s4-ch">&#9658;</span>
+    </div>
+    <div class="section-body" id="s4-body">
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">4a. Visual Design</span><span class="crit-pts">Sub-weight: 9 / 25 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Typography uses a deliberate scale (≥3 levels) with consistent hierarchy. Color system includes primary, secondary, neutral, and semantic palette defined in Figma styles/variables. Gestalt principles are demonstrably applied — not simply named. A design system (components, auto-layout, shared styles) is evident.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Visual hierarchy is generally clear. Color palette is intentional and mostly consistent. Some Gestalt principles applied but not all demonstrable across screens. Minor inconsistencies in component sizing, alignment, or spacing exist but do not disrupt comprehension.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Prototype is visually functional but lacks a coherent design system. Typography is inconsistent across screens. Color choices appear arbitrary. Gestalt principles invoked in the report but not visibly applied. Spacing and alignment are inconsistent.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">Prototype resembles a wireframe with colors applied rather than a hi-fi design. No typographic scale. Color usage inconsistent or inaccessible. Screens appear individually designed with no unifying visual language.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">4a — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s4a', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s4a-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 4a</div><textarea class="comment-area" placeholder="Note Gestalt principles that are visible vs merely named. Check Figma for shared styles/components. Verify typographic scale has 3+ levels…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">4b. Novel Interaction Demonstration</span><span class="crit-pts">Sub-weight: 9 / 25 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Innovative interaction communicated unambiguously through animations, annotated interaction flow, or narrated demo video. An observer unfamiliar with the project can understand what is novel, how it works, and why it improves on conventional alternatives. Interaction feedback states (active, error, success) are prototyped.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Novel interaction is present and visible in the prototype or video. The mechanism is mostly clear to an observer, though some steps may require verbal explanation. Key states are prototyped; edge states (error, empty) may be missing.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Novel interaction is claimed but only partially prototyped. A static screen is presented where an animated flow is needed. Innovation is not self-explanatory; viewer requires substantial narration to understand it.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">No meaningful novel interaction is prototyped. Deliverable presents a conventional UI without the innovative elements described in the proposal. No video, animation, or interaction flow demonstrates the proposed technique.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">4b — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s4b', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s4b-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 4b</div><textarea class="comment-area" placeholder="Could you understand the novel interaction without the presenter explaining it? Note if feedback states (error, success) are missing…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">4c. Accessibility</span><span class="crit-pts">Sub-weight: 7 / 25 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Identifies ≥3 specific accessibility considerations relevant to the target population and interaction modality (WCAG AA contrast verified, focus order defined, alternative input methods addressed, reduce-motion respected). Each consideration explicitly addressed in the design with documented evidence. Accessibility is integrated, not appended.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Identifies 2–3 relevant accessibility considerations. Most addressed in the design with reasonable evidence. Color contrast is checked. Some considerations identified without full implementation, with the gap acknowledged.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Accessibility section exists but identifies only surface-level considerations without verification. Generic and not tailored to the specific interaction modality or user population. No evidence that WCAG or platform guidelines were consulted.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">Accessibility not addressed, or addressed in a single sentence with no specificity. Prototype uses inaccessible color combinations (fails WCAG AA), relies on color alone for information encoding, or excludes users with motor/visual disabilities without acknowledgment.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">4c — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s4c', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s4c-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 4c</div><textarea class="comment-area" placeholder="Run a contrast checker on primary text/background pairs. Note whether accessibility considerations are specific to the interaction type or boilerplate…"></textarea></div>
+      </div>
+
+      <div class="pitfall-box">
+        <div class="pitfall-label">Common Pitfalls — Section 4</div>
+        <div class="pitfall-text">Performative accessibility: listing "we considered accessibility" without demonstrating compliance. Using color alone to convey state (red/green only for errors) is an automatic accessibility flag. Interaction demonstrations that require the presenter to narrate every step because the prototype cannot convey the concept independently will be scored as incomplete. Gestalt principles listed in a report but not enacted in the design receive no methodological credit.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════ SECTION 5 ════════════ -->
+  <div class="section-block" id="s5">
+    <div class="section-header" onclick="toggleSection('s5')">
+      <span class="sec-num">05</span>
+      <span class="sec-title">Final Presentation, Report, and Portfolio Readiness</span>
+      <span class="sec-weight">15%</span>
+      <span class="sec-chevron" id="s5-ch">&#9658;</span>
+    </div>
+    <div class="section-body" id="s5-body">
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">5a. Presentation Slides</span><span class="crit-pts">Sub-weight: 4 / 15 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">10–15 slides with a coherent narrative arc: problem context → research → design evolution → accessibility → innovation → impact → key takeaways. Visual hierarchy guides the audience; slides are not text-dense. Presenter does not read from slides. Time managed to within 30 seconds of the allocated window. Q&A demonstrates deep project ownership.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Covers all required topics within the slide count. Narrative is mostly coherent with minor organizational gaps. Slides are visually adequate; some may be text-heavy. Delivered with competence; time management within 1 minute of target.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Required topics present but not all covered with equal depth. Slides used as speaker notes (dense text, small font). One or more mandatory sections is superficial or missing. Presentation significantly exceeds or falls short of the time limit.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">Slide count outside the 10–15 range with no pedagogical justification. Multiple required sections absent. Presenter reads from slides verbatim. Design work is not clearly communicated — audience cannot reconstruct the project from the presentation alone.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">5a — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s5a', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s5a-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 5a</div><textarea class="comment-area" placeholder="Record actual slide count, timing, and quality of Q&A responses. Note which required sections were missing or superficial…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">5b. Project Report</span><span class="crit-pts">Sub-weight: 6 / 15 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">20–35 pages, professionally formatted PDF. Entire design process documented with explicit reference to HCI principles and frameworks. Challenges and failed iterations discussed honestly. Innovations are critically evaluated. Academic writing standard with correct citations where applicable.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Within the page range and professionally formatted. Most process stages well-documented. HCI principle references are present, though some may be applied superficially. Writing is clear with minor grammatical or structural issues. Challenges acknowledged if not deeply analyzed.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Report is outside the page range. Process documentation has gaps. HCI principles named but not operationalized. Writing quality impedes comprehension in places. Formatting is inconsistent.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">Report submitted as a deck, .docx, or informal document rather than a structured PDF. Major sections absent. Writing is informal or lists-only. No HCI frameworks applied. Document reads as a project log rather than a scholarly process report.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">5b — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s5b', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s5b-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 5b</div><textarea class="comment-area" placeholder="Note page count, HCI frameworks cited and how they were applied, whether failed iterations are honestly discussed…"></textarea></div>
+      </div>
+
+      <div class="criterion">
+        <div class="crit-header"><span class="crit-name">5c. Professional Branding and Portfolio Readiness</span><span class="crit-pts">Sub-weight: 5 / 15 pts</span></div>
+        <div class="levels-grid">
+          <div class="level-cell ex"><div class="level-label"><span class="level-ldot"></span>Excellent</div><div class="level-score">90–100%</div><div class="level-desc">Case study communicates: problem context, research methodology and key findings, design rationale for major decisions, accessibility approach, innovation explanation, measured or anticipated impact, personal learning outcomes, and concrete next steps. Visual assets are refined and production-quality. Self-contained — a hiring manager can understand the project's value without course context.</div></div>
+          <div class="level-cell go"><div class="level-label"><span class="level-ldot"></span>Good</div><div class="level-score">75–89%</div><div class="level-desc">Case study covers most required elements with some depth. Visual assets are polished. Next steps identified, if not deeply reasoned. Minor gaps exist (e.g., learning outcomes are generic). Suitable for a portfolio with minor revisions.</div></div>
+          <div class="level-cell sa"><div class="level-label"><span class="level-ldot"></span>Satisfactory</div><div class="level-score">60–74%</div><div class="level-desc">Case study covers required elements at a surface level. Rationale for design decisions is absent or vague. Learning outcomes and next steps are formulaic. Document requires significant revision to be portfolio-appropriate.</div></div>
+          <div class="level-cell ni"><div class="level-label"><span class="level-ldot"></span>Needs Improvement</div><div class="level-score">&lt;60%</div><div class="level-desc">No distinct case study artifact submitted, or submission is a copy of the project report without adaptation. Design rationale absent. Visual assets unrefined. A hiring manager cannot determine what the student contributed or learned.</div></div>
+        </div>
+        <div class="score-entry-row">
+          <span class="score-entry-label">5c — Assign performance level:</span>
+          <select class="score-select" onchange="updateScore('s5c', this.value)">
+            <option value="">— select level —</option>
+            <option value="95">Excellent (95)</option><option value="82">Good (82)</option><option value="67">Satisfactory (67)</option><option value="50">Needs Improvement (50)</option>
+          </select>
+          <div class="score-num-wrap"><span class="score-num-label">or enter score:</span><input type="number" class="score-num-input" id="s5c-input" min="0" max="100" placeholder="—" oninput="recalc()"></div>
+        </div>
+        <div class="comment-row"><div class="comment-label">Grader notes — 5c</div><textarea class="comment-area" placeholder="Ask: could a hiring manager understand this without course context? Note whether design rationale accompanies hi-fi screens or if it is visual-only…"></textarea></div>
+      </div>
+
+      <div class="pitfall-box">
+        <div class="pitfall-label">Common Pitfalls — Section 5</div>
+        <div class="pitfall-text">Reports that describe what was built rather than why decisions were made. Honest reflection on failures and pivots is valued — sanitized narratives that present only successes are considered less rigorous. Case studies that use only hi-fi screens without annotating design decisions are visual portfolios, not UX case studies. Citing HCI principles by name without applying them receives no methodological credit.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════ TOTALS DASHBOARD ════════════ -->
+  <div class="totals-section">
+    <div class="totals-header">Score Summary — Computed from Entered Scores</div>
+    <div class="totals-grid">
+      <div class="total-cell"><div class="total-cell-label">Section 1 (20%)</div><div class="total-cell-score" id="t1">—</div></div>
+      <div class="total-cell"><div class="total-cell-label">Section 2 (20%)</div><div class="total-cell-score" id="t2">—</div></div>
+      <div class="total-cell"><div class="total-cell-label">Section 3 (20%)</div><div class="total-cell-score" id="t3">—</div></div>
+      <div class="total-cell"><div class="total-cell-label">Section 4 (25%)</div><div class="total-cell-score" id="t4">—</div></div>
+      <div class="total-cell"><div class="total-cell-label">Section 5 (15%)</div><div class="total-cell-score" id="t5">—</div></div>
+      <div class="total-cell grand"><div class="total-cell-label">Weighted Final Score</div><div class="total-cell-score" id="tGrand">—</div></div>
+    </div>
+    <div class="overall-comment">
+      <div class="comment-label">Overall Grader Feedback</div>
+      <textarea class="comment-area" style="min-height:100px;" placeholder="Provide holistic feedback here: overarching strengths, recurring weaknesses, recommendations for improvement, and any academic integrity concerns…"></textarea>
+    </div>
+  </div>
+
+  <!-- ════════════ ACTION BAR ════════════ -->
+  <div class="action-bar">
+    <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn btn-outline" onclick="expandAll()">Expand All Sections</button>
+    <button class="btn btn-outline" onclick="collapseAll()">Collapse All</button>
+  </div>
+
+  <div class="footer-note">
+    <strong>Academic integrity note.</strong> All user research data (interview notes, affinity diagrams, test recordings) must be retained and available upon request. Fabricated or retroactively constructed research artifacts will result in a zero for the affected section. Process documentation carries equal or greater weight than prototype polish — a well-reasoned, evidence-driven project at a modest visual fidelity will outperform a polished prototype built on assumed user needs. Grades are assigned per criterion; partial credit is available at instructor discretion within each performance band. This rubric is provided to students at project kickoff and may be used for self-assessment throughout the semester.
+  </div>
+
+</div><!-- /page-shell -->
+
+<script>
+const weights = {
+  s1: { keys: ['s1a','s1b','s1c'], subs: [7,7,6], sectionW: 0.20 },
+  s2: { keys: ['s2a','s2b','s2c'], subs: [7,6,7], sectionW: 0.20 },
+  s3: { keys: ['s3a','s3b','s3c'], subs: [7,6,7], sectionW: 0.20 },
+  s4: { keys: ['s4a','s4b','s4c'], subs: [9,9,7], sectionW: 0.25 },
+  s5: { keys: ['s5a','s5b','s5c'], subs: [4,6,5], sectionW: 0.15 },
+};
+
+function updateScore(key, val) {
+  const input = document.getElementById(key + '-input');
+  if (input && val !== '') { input.value = val; }
+  recalc();
+}
+
+function recalc() {
+  let grand = 0; let grandPossible = 0;
+  ['s1','s2','s3','s4','s5'].forEach((sec, si) => {
+    const { keys, subs, sectionW } = weights[sec];
+    let secScore = 0; let secTotal = 0;
+    keys.forEach((k, ki) => {
+      const el = document.getElementById(k + '-input');
+      const v = el ? parseFloat(el.value) : NaN;
+      if (!isNaN(v)) {
+        secScore += (v / 100) * subs[ki];
+        secTotal += subs[ki];
+      }
+    });
+    const tEl = document.getElementById('t' + (si + 1));
+    if (tEl) {
+      if (secTotal > 0) {
+        const pct = ((secScore / secTotal) * 100).toFixed(1);
+        tEl.textContent = pct + '%';
+        grand += (secScore / secTotal) * sectionW * 100;
+        grandPossible += sectionW * 100;
+      } else {
+        tEl.textContent = '—';
+      }
+    }
+  });
+  const gEl = document.getElementById('tGrand');
+  if (gEl) { gEl.textContent = grandPossible > 0 ? (grand / grandPossible * 100).toFixed(1) + '%' : '—'; }
+}
+
+function toggleSection(id) {
+  const body = document.getElementById(id + '-body');
+  const ch = document.getElementById(id + '-ch');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  ch.classList.toggle('open', !isOpen);
+}
+
+function expandAll() {
+  ['s1','s2','s3','s4','s5'].forEach(id => {
+    document.getElementById(id + '-body').classList.add('open');
+    document.getElementById(id + '-ch').classList.add('open');
+  });
+}
+function collapseAll() {
+  ['s1','s2','s3','s4','s5'].forEach(id => {
+    document.getElementById(id + '-body').classList.remove('open');
+    document.getElementById(id + '-ch').classList.remove('open');
+  });
+}
+</script>
+</body>
+</html>
